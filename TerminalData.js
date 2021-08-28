@@ -1,3 +1,5 @@
+// FOR REFERENCE
+
 // to instantiate SubscriptionPackage object
 function SubscriptionPackage(level, hoursPerWeek, pricePerMonth) {
     this.level = level, // terminal ID

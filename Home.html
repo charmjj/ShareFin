@@ -9,16 +9,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="resources/parallax.js-1.5.0/parallax.min.js"></script>
+    <!-- <script src="resources/parallax.js-1.5.0/parallax.min.js"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script async src='TerminalData.js'></script>
     <title>ShareFin</title>
-    <!-- <link rel="stylesheet" href="resources/card4.css">
-    <link rel="stylesheet" href="resources/style.css"> -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap" rel="stylesheet">  -->
 </head>
 <style>
     body { 
@@ -30,9 +26,6 @@
       <div id="navbar d-flex">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <a href="Home.html" class="navbar-brand"><img src="" style="width: 100px; height: auto;">ShareFin</a>
-            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#hamburger"></button>
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
             <div class="collapse navbar-collapse" id="hamburger">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
@@ -42,7 +35,7 @@
                         <a href="#" class="nav-link">Make Bookings</a>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">Logout</a>
+                        <a href="./Landing.html" class="nav-link">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -61,6 +54,11 @@
     </div>
 
     <script>
+        // check if user logged in
+        if (!sessionStorage.getItem('email') || sessionStorage.getItem('email') == "") {
+            window.location.href = ".Landing.html";
+        }
+
         // to instantiate SubscriptionPackage object
         function SubscriptionPackage(level, hoursPerWeek, pricePerMonth) {
             this.level = level, // terminal ID
@@ -131,7 +129,6 @@
         </div>
         `
         });
-        console.log(content);
         document.getElementById("cardsHere").innerHTML = content;
     </script>
 
