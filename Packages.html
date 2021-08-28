@@ -14,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script async src='TerminalData.js'></script>
     <title>ShareFin</title>
     <!-- <link rel="stylesheet" href="resources/card4.css">
     <link rel="stylesheet" href="resources/style.css"> -->
@@ -59,6 +60,16 @@
     </div>
 
     <div id="packagesHere" class="row ml-1">
+        <script>
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_51JTMk8CbaEnnmnCRKuxJuJnJkgw5R4ztsIKbrPaanzb31782jKn4yPSP0vwuMsWdevFzpdMZL4oDWRSc8RxIg3Ew0013ghNJbS"
+            data-amount=100
+            data-name="test"
+            data-description="test"
+            data-image="test"
+            data-currency="sgd"
+            data-locale="auto">
+        </script>
     </div>
 
     <script>
@@ -78,15 +89,15 @@
             this.subscriptionPackages = subscriptionPackages; // array
         }
 
-        let BTsubscriptionPackage1 = new SubscriptionPackage("Competent", 5, 60); // terminal, hoursPerWeek, pricePerMonth
-        let BTsubscriptionPackage2 = new SubscriptionPackage("Proficient", 10, 120);
+        let KFsubscriptionPackage1 = new SubscriptionPackage("Competent", 5, 60); // terminal, hoursPerWeek, pricePerMonth
+        let KFsubscriptionPackage2 = new SubscriptionPackage("Proficient", 10, 120);
 
-        let BloomBergTerminal = new Terminal(
-            id = "BT",
-            terminalName = "Bloomberg Terminal", 
-            imageURL = "https://data.bloomberglp.com/company/sites/51/2019/08/og-image-generic-lp.png",
-            description = "The world-renowned financial data tool",
-            subscriptionPackages = [BTsubscriptionPackage1, BTsubscriptionPackage2]
+        let Koyfin = new Terminal(
+            id = "KF",
+            terminalName = "Koyfin", 
+            imageURL = "https://thumb.tildacdn.com/tild6135-3464-4534-b638-646166346262/-/resize/560x/-/format/webp/download.png",
+            description = "A financial data and analytics platform",
+            subscriptionPackages = [KFsubscriptionPackage1, KFsubscriptionPackage2]
         );
 
 
@@ -97,7 +108,7 @@
         let RefinitiveEikon = new Terminal(
             id = "RE",
             terminalName = "Refinitive Eikon", 
-            imageURL = "https://www.investopedia.com/thmb/BJjS2PPauZ6FLbZyopwKFQ1FlNI=/1576x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Refinitiv-5e7a5c90211647a68709db1bfdc3b3aa.jpg",
+            imageURL = "https://www.refinitiv.com/content/dam/marketing/en_us/images/logos/product/eikon-social-share-logo.png",
             description = "Best option for serious investors",
             subscriptionPackages = [REsubscriptionPackage1, REsubscriptionPackage2, REsubscriptionPackage3]
         );
@@ -114,7 +125,7 @@
         );
 
         // master terminal array
-        let terminalDataList = [BloomBergTerminal, RefinitiveEikon, FactSet];
+        let terminalDataList = [Koyfin, RefinitiveEikon, FactSet];
 
         let content = '';
 
@@ -127,6 +138,8 @@
                 currentTerminal = t;
             }
         }
+        
+        //var dt = 'image='+image_src+'&item_name='+currentTerminal.id+" "+package.level+'&price='+price;
 
         currentTerminal.subscriptionPackages.forEach(package => {
         content += `
@@ -134,10 +147,12 @@
             <div class="card-body">
                 <h5 class="card-title">${package.level}</h5>
                 <p class="card-text">${package.hoursPerWeek} hours per week for \$${package.pricePerMonth} per month</p>
-                <a href="./Payment.html?terminal=${currentTerminal.id}&level=${package.level}" class="btn" style="background-color:white">Buy</a>
-            </div>
+                <a href="./stripe/checkout.php?&image=${currentTerminal.imageURL}&item_name=${currentTerminal.id} ${package.level}&price=${package.pricePerMonth}" class="btn" style="background-color:white">Buy</a>
+                
+                </div>
         </div>
         `
+        // <a href="./Payment.html?terminal=${currentTerminal.id}&level=${package.level}" class="btn" style="background-color:white">Buy</a>
         });
 
         document.getElementById("packagesHere").innerHTML = content;

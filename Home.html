@@ -75,15 +75,15 @@
             this.subscriptionPackages = subscriptionPackages; // array
         }
 
-        let BTsubscriptionPackage1 = new SubscriptionPackage("Competent", 5, 60); // terminal, hoursPerWeek, pricePerMonth
-        let BTsubscriptionPackage2 = new SubscriptionPackage("Proficient", 10, 120);
+        let KFsubscriptionPackage1 = new SubscriptionPackage("Competent", 5, 60); // terminal, hoursPerWeek, pricePerMonth
+        let KFsubscriptionPackage2 = new SubscriptionPackage("Proficient", 10, 120);
 
-        let BloomBergTerminal = new Terminal(
-            id = "BT",
-            terminalName = "Bloomberg Terminal", 
-            imageURL = "https://data.bloomberglp.com/company/sites/51/2019/08/og-image-generic-lp.png",
-            description = "The world-renowned financial data tool",
-            subscriptionPackages = [BTsubscriptionPackage1, BTsubscriptionPackage2]
+        let Koyfin = new Terminal(
+            id = "KF",
+            terminalName = "Koyfin", 
+            imageURL = "https://thumb.tildacdn.com/tild6135-3464-4534-b638-646166346262/-/resize/560x/-/format/webp/download.png",
+            description = "A financial data and analytics platform",
+            subscriptionPackages = [KFsubscriptionPackage1, KFsubscriptionPackage2]
         );
 
 
@@ -111,7 +111,7 @@
         );
 
         // master terminal array
-        let terminalDataList = [BloomBergTerminal, RefinitiveEikon, FactSet];
+        let terminalDataList = [Koyfin, RefinitiveEikon, FactSet];
 
         // to store needed data in 
 
