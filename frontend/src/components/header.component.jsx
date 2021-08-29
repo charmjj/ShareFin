@@ -59,6 +59,7 @@ function Header() {
           {/* </ThemeProvider> */}
           <Avatar src={AvatarPic} alt="Jason" />
         </Button>
+        
         <Button 
             href="/login"
             name="login" 
@@ -115,6 +116,24 @@ function Header() {
             <span className="cursive" style={{textTransform: 'none'}}><b>SharkFinz</b></span>
           </Typography>
         </Button>
+
+        <Button 
+            href="/subscribe"
+            name="subscribe" 
+            onClick={handleItemClick} 
+            variant="outlined" 
+            color="inherit"
+            style={{ 
+              marginRight: '10px', 
+              fontWeight: 'bold', 
+              backgroundColor: `${activeItem === "login" ? '' : "rgb(0,224,0)"}`,
+              borderColor: `${activeItem === "login" ? '' : "white"}`,
+            }}
+            disabled={ activeItem === "login" ? true : false}
+          >
+            Subscribe
+          </Button>
+
         <Hidden xsDown>
           <Button 
             href="/login"

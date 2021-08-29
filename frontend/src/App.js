@@ -6,6 +6,9 @@ import './App.css';
 import Header from './components/header.component';
 import HomePage from './pages/home.page';
 import LoginPage from './pages/login.page';
+import SubPage from './pages/subscribe';
+import Pricing from './pages/pricing';
+
 class App extends React.Component {
   
   render() {
@@ -16,6 +19,8 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path='/login' component={LoginPage} />
+          <Route exact path="/subscribe" component={SubPage} />
+          <Route exact path="/pricing" component={Pricing} />
           {/* <Route path="/facilities" component={Facilities} /> */}
           <Redirect to="/" /> 
         </Switch>
