@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import React, { useState } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -32,7 +32,7 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 function createData(name, date, start, end, loginid, password) {
-  return { name, date, start, end, loginid, password};
+  return { name, date, start, end, loginid, password };
 }
 
 // var rows = [
@@ -41,41 +41,35 @@ function createData(name, date, start, end, loginid, password) {
 //   createData('Koyfin', '2021-09-01', '18:30', '19:30', 'ShareFinuser3', 'vla84%#98eclsf'),
 // ];
 
-var row = "";
+export default function CustomizedTables() {
 
-http.get('/')
-  .then(response => {
-    var rows = [];
-    for (row of response.data.user_bookings){
-      let datetime = row.start.split('T')
-      console.log(datetime[0])
-      rows.push(
-        createData(row.service, datetime[0], datetime[1], row.end.split('T')[1], 'fdsfsd', 'sdfsdf')
+  const [rows, setRows] = useState([])
+
+  http.get('/')
+    .then(response => {
+      var res = []
+      for (const row of response.data.user_bookings){
+        let datetime = row.start.split('T')
+        res.push(
+          createData(row.service, datetime[0], datetime[1], row.end.split('T')[1], 'fdsfsd', 'sdfsdf')
         );
-    }
-  })
-  .catch(e => {
-    console.log(e);
+      }
+      setRows(res)
+      // console.log(rows[0].length)
+    })
+    .catch(e => {
+      console.log(e);
+    });
+
+  const useStyles = makeStyles({
+    table: {
+      minWidth: 700,
+    },
   });
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
-
-
-export default function CustomizedTables() {
   const classes = useStyles();
-  if (rows == undefined){
-    return (
-      <Container>
-       </Container> 
-    )
-  }
 
-  else {
-  return (
+  return rows.length > 0 ? (
     <React.Fragment>
       <Container>
         <Box mt={3}>
@@ -95,7 +89,6 @@ export default function CustomizedTables() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {console.log(rows)}
                 {rows.map((row) => (
                   <StyledTableRow key={row.name}>
                     <StyledTableCell component="th" scope="row">
@@ -116,7 +109,5 @@ export default function CustomizedTables() {
       </Container>
       
   </React.Fragment>
-  );
-
-}
+  ) : ''
 }
