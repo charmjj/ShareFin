@@ -12,11 +12,23 @@ router.get('/', function (req, res, next) {
   axios.get(url)
     .then(function(response) {
       var data = response.data.bookings
+      var name ="Fiona"
+      var user_bookings = { "booking": []};
+      console.log(data)
+      for (booking of data){
+        if (booking.full_name == name){
+            user_bookings.booking.push({
+                    "start": booking.start,
+                    "end": booking.finish,
+                    "service": booking.field_1_r,
+                })
+            }
+        }
+      console.log(user_bookings)
       res.json({data})
+
     })
 })
-
-
 
 // export default router
 module.exports = router
