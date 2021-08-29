@@ -6,7 +6,6 @@ import './App.css';
 import Header from './components/header.component';
 import HomePage from './pages/home.page';
 import LoginPage from './pages/login.page';
-
 class App extends React.Component {
   
   render() {
