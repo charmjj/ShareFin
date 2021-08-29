@@ -13,11 +13,11 @@ router.get('/', function (req, res, next) {
     .then(function(response) {
       var data = response.data.bookings
       var name ="Fiona"
-      var user_bookings = { "booking": []};
+      var user_bookings = [];
       console.log(data)
       for (booking of data){
         if (booking.full_name == name){
-            user_bookings.booking.push({
+            user_bookings.push({
                     "start": booking.start,
                     "end": booking.finish,
                     "service": booking.field_1_r,
@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
             }
         }
       console.log(user_bookings)
-      res.json({data})
+      res.json({user_bookings})
 
     })
 })
