@@ -115,7 +115,7 @@ export default function Album() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary" backgroundColor="#4CAF50" component="a" href="/pricing">
+                    <Button size="small" color="white" style={{backgroundColor:"lightgreen"}} component="a" href="/pricing">
                       View
                     </Button>
                   </CardActions>
