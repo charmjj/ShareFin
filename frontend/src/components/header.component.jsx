@@ -30,6 +30,15 @@ function Header() {
 
   const handleItemClick = (e) => setActiveItem(e.currentTarget.name);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const menuBar = user ?
   (
@@ -46,12 +55,29 @@ function Header() {
         >
           {/* <ThemeProvider theme={theme}> */}
             <Typography variant="h5"  >
-              <span className="cursive" style={{textTransform: 'none'}}><b>SharkFinz</b></span>
+              <span className="cursive" style={{textTransform: 'none'}}><b>ShareFin</b></span>
             </Typography>
           {/* </ThemeProvider> */}
         </Button>
 
-        <Button aria-controls="simple-menu" aria-haspopup="true">
+        <Button 
+            href="/subscribe"
+            name="subscribe" 
+            onClick={handleItemClick} 
+            variant="outlined" 
+            color="inherit"
+            style={{ 
+              marginRight: '10px', 
+              fontWeight: 'bold', 
+              backgroundColor: `${activeItem === "subscribe" ? '' : "rgb(0,224,0)"}`,
+              borderColor: `${activeItem === "subscribe" ? '' : "white"}`,
+            }}
+            disabled={ activeItem === "subscribe" ? true : false}
+          >
+            Subscribe
+          </Button>
+
+        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
           {/* <ThemeProvider theme={theme}> */}
             <Typography variant="h6">
               <span className="cursive" style={{ fontWeight: "bold", textTransform: 'none'}}>Jason</span> &nbsp;
@@ -60,22 +86,18 @@ function Header() {
           <Avatar src={AvatarPic} alt="Jason" />
         </Button>
         
-        <Button 
-            href="/login"
-            name="login" 
-            variant="outlined" 
-            color="inherit"
-            style={{ 
-              marginRight: '10px', 
-              fontWeight: 'bold', 
-              backgroundColor: `${activeItem === "login" ? '' : "#84d4fc"}`,
-              borderColor: `${activeItem === "login" ? '' : "white"}`,
-            }}
-            disabled={ activeItem === "login" ? true : false}
-            onClick={() => {setConfirmOpen(true);}}
-          >
-          Logout
-        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+          getContentAnchorEl={null}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          transformOrigin={{ horizontal: "center" }}
+        >
+          <MenuItem onClick={handleClose} href={`/schedule`} component="a">Schedules</MenuItem>
+          <MenuItem onClick={() => {setConfirmOpen(true); handleClose();}}>Logout</MenuItem>
           <Dialog
             open={confirmOpen}
             onClose={() => setConfirmOpen(false)}
@@ -98,6 +120,7 @@ function Header() {
               </Button>
             </DialogActions>
           </Dialog>
+        </Menu>
       </Toolbar>
     </AppBar>
   )
@@ -113,7 +136,7 @@ function Header() {
           startIcon={<img src={SharkFinz} alt="..." style={{ minWidth:'35px', maxWidth: '50px' }} />}
         >
           <Typography variant="h5" >
-            <span className="cursive" style={{textTransform: 'none'}}><b>SharkFinz</b></span>
+            <span className="cursive" style={{textTransform: 'none'}}><b>ShareFin</b></span>
           </Typography>
         </Button>
 
@@ -126,10 +149,10 @@ function Header() {
             style={{ 
               marginRight: '10px', 
               fontWeight: 'bold', 
-              backgroundColor: `${activeItem === "login" ? '' : "rgb(0,224,0)"}`,
-              borderColor: `${activeItem === "login" ? '' : "white"}`,
+              backgroundColor: `${activeItem === "subscribe" ? '' : "rgb(0,224,0)"}`,
+              borderColor: `${activeItem === "losubscribegin" ? '' : "white"}`,
             }}
-            disabled={ activeItem === "login" ? true : false}
+            disabled={ activeItem === "subscribe" ? true : false}
           >
             Subscribe
           </Button>
