@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
   axios.get(url)
     .then(function(response) {
       var data = response.data.bookings
-      var name ="Fiona"
+      var name ="Jason"
       var user_bookings = [];
       console.log(data)
       for (booking of data){

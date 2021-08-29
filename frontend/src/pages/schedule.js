@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import { Container } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import http from '../http-common';
+import Button from '@material-ui/core/Button';
 
 import Typography from '@material-ui/core/Typography';
 
@@ -35,11 +36,15 @@ function createData(name, date, start, end, loginid, password) {
   return { name, date, start, end, loginid, password };
 }
 
-// var rows = [
-//   createData('Eikon', '2021-08-31', '08:30', '09:30', 'ShareFinuser1', 's8736kdna8qkmfns'),
-//   createData('Factset', '2021-08-31', '18:30', '19:30', 'ShareFinuser2', 'vla84%#98eclsf'),
-//   createData('Koyfin', '2021-09-01', '18:30', '19:30', 'ShareFinuser3', 'vla84%#98eclsf'),
-// ];
+function createData2(name, button) {
+  return { name, button };
+}
+
+var rows2 = [
+  createData2('Eikon', ''),
+  createData2('Factset', '2021-08-31', '18:30', '19:30', 'ShareFinuser2', 'vla84%#98eclsf'),
+  createData2('Koyfin', '2021-09-01', '18:30', '19:30', 'ShareFinuser3', 'vla84%#98eclsf'),
+];
 
 export default function CustomizedTables() {
 
@@ -51,11 +56,10 @@ export default function CustomizedTables() {
       for (const row of response.data.user_bookings){
         let datetime = row.start.split('T')
         res.push(
-          createData(row.service, datetime[0], datetime[1], row.end.split('T')[1], 'fdsfsd', 'sdfsdf')
+          createData(row.service, datetime[0], datetime[1], row.end.split('T')[1], 'ShareFin', 'iloveSIS123')
         );
       }
       setRows(res)
-      // console.log(rows[0].length)
     })
     .catch(e => {
       console.log(e);
@@ -99,6 +103,36 @@ export default function CustomizedTables() {
                     <StyledTableCell align="right">{row.end}</StyledTableCell>
                     <StyledTableCell align="right">{row.loginid}</StyledTableCell>
                     <StyledTableCell align="right">{row.password}</StyledTableCell>
+                  </StyledTableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      
+      </Container>
+
+
+      <Container>
+        <Box mt={3}>
+        <Typography component="h1" variant="h4" color="textPrimary" gutterBottom>
+          Booking
+        </Typography>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>Service</StyledTableCell>
+                  <StyledTableCell align="left">Link</StyledTableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows2.map((row) => (
+                  <StyledTableRow key={row.name}>
+                    <StyledTableCell component="th" scope="row">
+                      {row.name}
+                    </StyledTableCell>
+                    <StyledTableCell align="left"><Button style={{backgroundColor:"lightgreen"}}><a href="https://www.supersaas.com/schedule/Fionawee/Bookings" target="_blank">Book</a></Button></StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
