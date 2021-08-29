@@ -182,31 +182,19 @@ export default function Pricing() {
           ))}
         </Grid>
       </Container>
+
       {/* Footer */}
-      <Container maxWidth="md" component="footer" className={classes.footer}>
-        <Grid container spacing={4} justifyContent="space-evenly">
-          {footers.map((footer) => (
-            <Grid item xs={6} sm={3} key={footer.title}>
-              <Typography variant="h6" color="textPrimary" gutterBottom>
-                {footer.title}
-              </Typography>
-              <ul>
-                {footer.description.map((item) => (
-                  <li key={item}>
-                    <Link href="#" variant="subtitle1" color="textSecondary">
-                      {item}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </Grid>
-          ))}
-        </Grid>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
-      </Container>
+      <footer className={classes.footer}>
+        <Typography variant="h6" align="center" gutterBottom>
+          ShareFin
+        </Typography>
+        <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+          Professional Investment at Fractional Cost
+        </Typography>
+        <Copyright />
+      </footer>
       {/* End footer */}
+
     </React.Fragment>
   );
 }
