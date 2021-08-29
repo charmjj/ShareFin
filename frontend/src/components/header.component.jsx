@@ -1,22 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Hidden from '@material-ui/core/Hidden';
-// import Menu from '@material-ui/core/Menu';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Dialog from '@material-ui/core/Dialog';
-// import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
-// import DialogTitle from '@material-ui/core/DialogTitle';
-// import { createTheme } from '@material-ui/core/styles';
-// import Avatar from '@material-ui/core/Avatar';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { createTheme } from '@material-ui/core/styles';
+import Avatar from '@material-ui/core/Avatar';
 
 import SharkFinz from '../assets/sharkfinz.jpg';
+import { AuthContext } from '../context/auth';
+import AvatarPic from '../assets/avatar.png';
 
 function Header() {
+
+  const { user, logout } = useContext(AuthContext);
 
   const pathname = window.location.pathname;
 
@@ -25,8 +29,78 @@ function Header() {
   const [activeItem, setActiveItem] = useState(path);
 
   const handleItemClick = (e) => setActiveItem(e.currentTarget.name);
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
-  return (
+  const menuBar = user ?
+  (
+    <AppBar position="static" color="transparent"  elevation={3}>
+      <Toolbar >
+        <Button  
+          className="Button-NoBG"
+          href="/"
+          style={{ marginRight: 'auto' }}
+          disableRipple 
+          disableFocusRipple 
+          disableElevation 
+          startIcon={<img src={SharkFinz} alt="..." style={{ minWidth:'35px', maxWidth: '50px' }} />}
+        >
+          {/* <ThemeProvider theme={theme}> */}
+            <Typography variant="h5"  >
+              <span className="cursive" style={{textTransform: 'none'}}><b>SharkFinz</b></span>
+            </Typography>
+          {/* </ThemeProvider> */}
+        </Button>
+
+        <Button aria-controls="simple-menu" aria-haspopup="true">
+          {/* <ThemeProvider theme={theme}> */}
+            <Typography variant="h6">
+              <span className="cursive" style={{ fontWeight: "bold", textTransform: 'none'}}>Jason</span> &nbsp;
+            </Typography>
+          {/* </ThemeProvider> */}
+          <Avatar src={AvatarPic} alt="Jason" />
+        </Button>
+        <Button 
+            href="/login"
+            name="login" 
+            variant="outlined" 
+            color="inherit"
+            style={{ 
+              marginRight: '10px', 
+              fontWeight: 'bold', 
+              backgroundColor: `${activeItem === "login" ? '' : "#84d4fc"}`,
+              borderColor: `${activeItem === "login" ? '' : "white"}`,
+            }}
+            disabled={ activeItem === "login" ? true : false}
+            onClick={() => {setConfirmOpen(true);}}
+          >
+          Logout
+        </Button>
+          <Dialog
+            open={confirmOpen}
+            onClose={() => setConfirmOpen(false)}
+            aria-labelledby="draggable-dialog-title"
+          >
+            <DialogTitle>
+              Confirm logout?
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText variant="h6">
+                Are you sure you want to logout?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={() => setConfirmOpen(false)} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={logout} href={`/`} style={{ color: "red" }}>
+                Logout
+              </Button>
+            </DialogActions>
+          </Dialog>
+      </Toolbar>
+    </AppBar>
+  )
+  : (
     <AppBar position="static" color="transparent">
       <Toolbar >
         <Button  
@@ -38,7 +112,7 @@ function Header() {
           startIcon={<img src={SharkFinz} alt="..." style={{ minWidth:'35px', maxWidth: '50px' }} />}
         >
           <Typography variant="h5" >
-            <span className="cursive" style={{textTransform: 'none'}}><b>FreeBirds</b></span>
+            <span className="cursive" style={{textTransform: 'none'}}><b>SharkFinz</b></span>
           </Typography>
         </Button>
         <Hidden xsDown>
@@ -51,7 +125,7 @@ function Header() {
             style={{ 
               marginRight: '10px', 
               fontWeight: 'bold', 
-              backgroundColor: `${activeItem === "login" ? '' : "#84d4fc"}`,
+              backgroundColor: `${activeItem === "login" ? '' : "rgb(197,224,181)"}`,
               borderColor: `${activeItem === "login" ? '' : "white"}`,
             }}
             disabled={ activeItem === "login" ? true : false}
@@ -116,7 +190,8 @@ function Header() {
       </Toolbar>
     </AppBar>
   )
-    
+  
+  return menuBar;
 }
 
 export default Header
