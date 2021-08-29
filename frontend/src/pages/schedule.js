@@ -132,7 +132,7 @@ export default function CustomizedTables() {
                     <StyledTableCell component="th" scope="row">
                       {row.name}
                     </StyledTableCell>
-                    <StyledTableCell align="left"><Button style={{backgroundColor:"lightgreen"}}><a href="https://www.supersaas.com/schedule/Fionawee/Bookings" target="_blank">Book</a></Button></StyledTableCell>
+                    <StyledTableCell align="left"><Button style={{backgroundColor:"lightgreen"}}><a href="https://www.supersaas.com/schedule/Fionawee/Bookings" target="_blank" rel="noreferrer">Book</a></Button></StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
@@ -143,5 +143,13 @@ export default function CustomizedTables() {
       </Container>
       
   </React.Fragment>
-  ) : ''
+  ) : 
+  
+  <>
+    <Box mt={5}>
+      <Typography variant="h3">
+        It is coming ... Patience ...
+      </Typography>
+    </Box>
+  </>
 }
