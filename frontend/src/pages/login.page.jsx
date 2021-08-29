@@ -16,8 +16,10 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Footer from '../components/footer.component';
 import { AuthContext } from '../context/auth';
 import jwt from 'jsonwebtoken';
+import SharkFinz from '../assets/sharkfinz.jpg';
 
 function generateToken(user) {
   return jwt.sign({
@@ -77,7 +79,6 @@ function LoginPage(props) {
   }
 
   function handleEmailChange(e) {
-    console.log(e.target.value)
     setEmail(e.target.value);
   }
 
@@ -123,13 +124,15 @@ function LoginPage(props) {
   const classes = useStyles();
 
   return (
-    <Grid container component="main" className={classes.root}>
+    <>
+    <Grid container component="main" className={classes.root} style={{ marginTop : '1px' }}>
       <CssBaseline />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
+          <Avatar src={SharkFinz} alt="S" />
+          {/* <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
-          </Avatar>
+          </Avatar> */}
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -180,7 +183,7 @@ function LoginPage(props) {
             >
               Sign In
             </Button>
-            <Grid container>
+            {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
@@ -191,7 +194,7 @@ function LoginPage(props) {
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
-            </Grid>
+            </Grid> */}
           </form>
           { Object.keys(errors).length > 0 && (
             <Box mt={3}>
@@ -224,7 +227,10 @@ function LoginPage(props) {
       <Backdrop className={classes.backdrop} open={ loading ? true : false }>
         <CircularProgress color="inherit" />
       </Backdrop>
+      
     </Grid>
+    <Footer />
+    </>
   );
 }
 

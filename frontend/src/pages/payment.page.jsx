@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
+// import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import StarIcon from '@material-ui/icons/StarBorder';
+// import { loadStripe } from "@stripe/stripe-js";
 import {
   CardElement,
   useElements,
@@ -88,7 +95,10 @@ const ResetButton = ({ onClick }) => (
   </button>
 );
 
-function PaymentPage() {
+function PaymentPage(props) {
+
+  const packageType = props.match.params.packageType;
+
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -146,6 +156,13 @@ function PaymentPage() {
   };
 
   const useStyles = makeStyles((theme) => ({
+    '@global': {
+      ul: {
+        margin: 0,
+        padding: 0,
+        listStyle: 'none',
+      },
+    },
     root: {
       height: '89vh',
     },
@@ -174,10 +191,56 @@ function PaymentPage() {
     submit: {
       margin: theme.spacing(3, 0, 2),
     },
+    cardHeader: {
+      backgroundColor:
+        theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700],
+    },
+    cardPricing: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'baseline',
+      marginBottom: theme.spacing(2),
+    },
   }));
 
   const classes = useStyles();
 
+  const tiers = [
+    {
+      title: 'Lite',
+      price: '39.99',
+      description: ['2 hour per week', 'Help center access', 'Email support'],
+      buttonText: 'Subscribe Now',
+      buttonVariant: 'outlined',
+    },
+    {
+      title: 'Pro',
+      subheader: 'Most popular',
+      price: '59.99',
+      description: [
+        '5 hours per week',
+        'Help center access',
+        'Priority email support',
+      ],
+      buttonText: 'Get started',
+      buttonVariant: 'contained',
+    },
+    {
+      title: 'ShareFinner',
+      price: '88.88',
+      description: [
+        '8 hours per week',
+        'Help center access',
+        'Phone & email support',
+      ],
+      buttonText: 'Subscribe Now',
+      buttonVariant: 'outlined',
+    },
+  ];
+
+  const tier = tiers.filter(tier => tier.title === packageType);
+
+  
   return paymentMethod ? (
     <div className="Result">
       <div className="ResultTitle" role="alert">
@@ -190,70 +253,111 @@ function PaymentPage() {
       <ResetButton onClick={reset} />
     </div>
   ) : (
-    <div className={classes.paper}>
-      <Typography variant="h2">
-        Payment
-      </Typography>
-      <form className={classes.form} noValidate onSubmit={handleSubmit}>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          label="Name"
-          id="name"
-          placeholder="Jane Doe"
-          autoComplete="name"
-          value={billingDetails.name}
-          onChange={(e) => {
-            setBillingDetails({ ...billingDetails, name: e.target.value });
-          }}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          label="Email"
-          id="email"
-          type="email"
-          placeholder="janedoe@gmail.com"
-          required
-          fullWidth
-          autoComplete="email"
-          value={billingDetails.email}
-          onChange={(e) => {
-            setBillingDetails({ ...billingDetails, email: e.target.value });
-          }}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          label="Phone"
-          id="phone"
-          type="tel"
-          placeholder="9875-4487"
-          required
-          fullWidth
-          autoComplete="tel"
-          value={billingDetails.phone}
-          onChange={(e) => {
-            setBillingDetails({ ...billingDetails, phone: e.target.value });
-          }}
-        />
-        <CardField
-          onChange={(e) => {
-            setError(e.error);
-            setCardComplete(e.complete);
-          }}
-        />
-        {error && <ErrorMessage>{error.message}</ErrorMessage>}
-        <Box mt={2}>
-          <SubmitButton processing={processing} error={error} disabled={!stripe}>
-            Pay
-          </SubmitButton>
-        </Box>
-      </form>
-    </div>
-      
+    <Container maxWidth="lg">
+      <Grid container>
+        <Grid item xs={12} sm={6}>
+          <div className={classes.paper}>
+            <Typography variant="h3">
+              Subscription
+            </Typography>
+            <Box mt={5} style={{width:"80%"}}>
+              <Card>
+                <CardHeader
+                  title={tier[0].title}
+                  subheader={tier[0].subheader}
+                  titleTypographyProps={{ align: 'center' }}
+                  subheaderTypographyProps={{ align: 'center' }}
+                  action={tier[0].title === 'Pro' ? <StarIcon /> : null}
+                  className={classes.cardHeader}
+                />
+                <CardContent>
+                  <div className={classes.cardPricing}>
+                    <Typography component="h2" variant="h3" color="textPrimary">
+                      ${tier[0].price}
+                    </Typography>
+                    <Typography variant="h6" color="textSecondary">
+                      /mo
+                    </Typography>
+                  </div>
+                  <ul>
+                    {tier[0].description.map((line) => (
+                      <Typography component="li" variant="subtitle1" align="center" key={line}>
+                        {line}
+                      </Typography>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </Box>
+          </div>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <div className={classes.paper}>
+            <Typography variant="h2">
+              Payment
+            </Typography>
+            <form className={classes.form} noValidate onSubmit={handleSubmit}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                label="Name"
+                id="name"
+                placeholder="Jane Doe"
+                autoComplete="name"
+                value={billingDetails.name}
+                onChange={(e) => {
+                  setBillingDetails({ ...billingDetails, name: e.target.value });
+                }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                label="Email"
+                id="email"
+                type="email"
+                placeholder="janedoe@gmail.com"
+                required
+                fullWidth
+                autoComplete="email"
+                value={billingDetails.email}
+                onChange={(e) => {
+                  setBillingDetails({ ...billingDetails, email: e.target.value });
+                }}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                label="Phone"
+                id="phone"
+                type="tel"
+                placeholder="9875-4487"
+                required
+                fullWidth
+                autoComplete="tel"
+                value={billingDetails.phone}
+                onChange={(e) => {
+                  setBillingDetails({ ...billingDetails, phone: e.target.value });
+                }}
+              />
+              <CardField
+                onChange={(e) => {
+                  setError(e.error);
+                  setCardComplete(e.complete);
+                }}
+              />
+              {error && <ErrorMessage>{error.message}</ErrorMessage>}
+              <Box mt={2}>
+                <SubmitButton processing={processing} error={error} disabled={!stripe}>
+                  Pay
+                </SubmitButton>
+              </Box>
+            </form>
+          </div>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

@@ -5,10 +5,28 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { AuthProvider } from './context/auth';
+import {loadStripe} from '@stripe/stripe-js';
+import {
+  Elements
+} from '@stripe/react-stripe-js';
+
+import { HunelProvider, HunelCreditCard } from 'reactjs-credit-card';
+const hunel = new HunelCreditCard();
+
+const stripePromise = loadStripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
+
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <AuthProvider>
+    <BrowserRouter>
+      <Elements stripe={stripePromise} hidePostalCode={true}>
+        <HunelProvider config={hunel}>
+          <App />
+        </HunelProvider>
+      </Elements>
+    </BrowserRouter>
+  </AuthProvider>
+  ,
   document.getElementById('root')
 );
 
